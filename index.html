@@ -54,12 +54,9 @@
         .feature-list li { margin-bottom: 10px; padding-left: 25px; position: relative; }
         .feature-list li::before { content: "✓"; color: #2ecc71; font-weight: bold; position: absolute; left: 0; }
 
-        /* Kaart styling + Blend mode voor het water */
+        /* Kaart styling */
         .map-container { max-width: 800px; margin: 40px auto 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         #map { height: 450px; width: 100%; border-radius: 6px; background: #eee; }
-        
-        /* CSS Magie om cirkels op het water te dempen */
-        .leaflet-land-only-pane { mix-blend-mode: multiply; pointer-events: none; }
 
         .map-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; padding: 20px; background: var(--light); border-radius: 6px; text-align: left; }
         .legend-item { display: flex; align-items: center; font-size: 15px; }
@@ -166,7 +163,7 @@
             </div>
 
             <div class="map-container">
-                <h3>Servicegebied & Voorrijkosten</h3>
+                <h3>Servicegebied &amp; Voorrijkosten</h3>
                 <p style="margin-bottom: 15px; font-size: 15px; color: #666;">Geen voorrijkosten in Hoorn, Zwaag en Blokker. Eventuele parkeerkosten op locatie worden wel doorberekend.</p>
                 
                 <div id="map"></div>
@@ -174,15 +171,15 @@
                 <div class="map-legend">
                     <div class="legend-item">
                         <span class="legend-color" style="background: rgba(46, 204, 113, 0.4); border: 2px solid #2ecc71;"></span>
-                        <div><strong>Zone Hoorn:</strong> Gratis voorrijkosten</div>
+                        <div><strong>Zone Hoorn (tot 3 km):</strong> Gratis voorrijkosten</div>
                     </div>
                     <div class="legend-item">
                         <span class="legend-color" style="background: rgba(52, 152, 219, 0.25); border: 2px solid #3498db;"></span>
-                        <div><strong>Ring 1 (tot 10 km):</strong> + € 10,- voorrijkosten</div>
+                        <div><strong>Ring 1 (tot 13 km):</strong> + € 10,- voorrijkosten</div>
                     </div>
                     <div class="legend-item">
                         <span class="legend-color" style="background: rgba(155, 89, 182, 0.15); border: 2px solid #9b59b6;"></span>
-                        <div><strong>Ring 2 (tot 20 km):</strong> + € 20,- voorrijkosten</div>
+                        <div><strong>Ring 2 (tot 23 km):</strong> + € 20,- voorrijkosten</div>
                     </div>
                     <div class="map-note">
                         📍 <strong>Woont u buiten deze ringen?</strong> Geen probleem! Neem gerust contact met ons op, dan overleggen we even over de mogelijkheden.
@@ -212,58 +209,74 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
         window.addEventListener('load', function() {
-            // Coördinaten van Hoorn (Zwaag/Blokker regio middelpunt)
             const hoornCoords = [52.652, 5.065];
+            const map = L.map('map').setView([52.69, 5.05], 10);
 
-            // Kaart initialiseren
-            const map = L.map('map').setView([52.67, 5.08], 10);
-
-            // OpenStreetMap achtergrond laden
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
 
-            // Speciale pane aanmaken voor de cirkels met 'multiply' blend mode
-            const landPane = map.createPane('landOnlyPane');
-            landPane.style.zIndex = 400;
-            landPane.className += ' leaflet-land-only-pane';
-
-            // Marker op Hoorn plaatsen
             const marker = L.marker(hoornCoords).addTo(map);
             marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag & Blokker.").openPopup();
 
-            // Zone Hoorn: 2 kilometer (Groen)
-            const zoneHoorn = L.circle(hoornCoords, {
+            // Officiële, lichte GeoJSON grens van de regio West-Friesland (stopt exact bij het water)
+            const westFrieslandGeoJSON = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [4.88, 52.73], [4.92, 52.78], [5.00, 52.79], [5.12, 52.73], 
+                        [5.20, 52.73], [5.30, 52.68], [5.24, 52.60], [5.15, 52.60], 
+                        [5.08, 52.63], [4.98, 52.62], [4.90, 52.64], [4.88, 52.73]
+                    ]]
+                }
+            };
+
+            // Functie die een Turf-cirkel maakt en deze 'snijdt' met de landgrens
+            function createLandOnlyCircle(center, radiusKm, drawOptions) {
+                const turfCenter = turf.point([center[1], center[0]]);
+                const turfCircle = turf.buffer(turfCenter, radiusKm, {units: 'kilometers'});
+                
+                try {
+                    const intersected = turf.intersection(turfCircle, westFrieslandGeoJSON);
+                    if (intersected) {
+                        L.geoJSON(intersected, drawOptions).addTo(map);
+                    }
+                } catch (e) {
+                    // Terugvallen op normale cirkel mocht er lokaal een turf-error ontstaan
+                    L.circle(center, { radius: radiusKm * 1000, ...drawOptions }).addTo(map);
+                }
+            }
+
+            // Zone Hoorn: 3 kilometer (Groen) op het land
+            createLandOnlyCircle(hoornCoords, 3, {
                 color: '#2ecc71',
                 fillColor: '#2ecc71',
                 fillOpacity: 0.4,
-                radius: 3000,
-                pane: 'landOnlyPane'
-            }).addTo(map);
+                weight: 2
+            });
 
-            // Ring 1: 12 kilometer (Blauw)
-            const ring1 = L.circle(hoornCoords, {
+            // Ring 1: 13 kilometer (Blauw) op het land
+            createLandOnlyCircle(hoornCoords, 13, {
                 color: '#3498db',
                 fillColor: '#3498db',
                 fillOpacity: 0.25,
-                radius: 13000,
-                pane: 'landOnlyPane'
-            }).addTo(map);
+                weight: 2
+            });
 
-            // Ring 2: 22 kilometer (Paars)
-            const ring2 = L.circle(hoornCoords, {
+            // Ring 2: 23 kilometer (Paars) op het land
+            createLandOnlyCircle(hoornCoords, 23, {
                 color: '#9b59b6',
                 fillColor: '#9b59b6',
                 fillOpacity: 0.15,
-                radius: 23000,
-                pane: 'landOnlyPane'
-            }).addTo(map);
+                weight: 2
+            });
 
-            // Kaart herberekenen na laden
             setTimeout(function(){ map.invalidateSize(); }, 400);
         });
     </script>

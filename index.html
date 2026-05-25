@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keuning Fotografie | Pasfoto's aan huis</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
     <style>
         /* Basis Stijlen */
         :root {
@@ -43,9 +45,16 @@
         .step-number { background: var(--accent); color: #fff; width: 40px; height: 40px; line-height: 40px; border-radius: 50%; display: inline-block; font-weight: bold; margin-bottom: 15px; }
 
         /* Tarieven & Regio */
-        .pricing-box { border: 2px solid var(--light); padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .pricing-box { border: 2px solid var(--light); padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background: #fff; margin-bottom: 40px; }
         .price { font-size: 48px; font-weight: bold; color: var(--primary); margin: 20px 0; }
         .guarantee { background: #e8f4fd; color: #1d6fa5; padding: 15px; border-radius: 5px; margin-top: 30px; font-weight: 500; }
+
+        /* Kaart styling */
+        .map-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        #map { height: 450px; width: 100%; border-radius: 6px; z-index: 1; }
+        .map-legend { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 20px; padding: 15px; background: var(--light); border-radius: 6px; }
+        .legend-item { display: flex; align-items: center; font-size: 15px; margin: 5px 10px; }
+        .legend-color { width: 20px; height: 20px; border-radius: 50%; margin-right: 10px; display: inline-block; }
 
         /* Contact / Call to Action */
         .cta { background: var(--primary); color: #fff; text-align: center; }
@@ -59,7 +68,8 @@
         /* Mobiel */
         @media (max-width: 768px) {
             .hero h1 { font-size: 30px; }
-            .nav-links { display: none; } /* Simpel voor nu */
+            .nav-links { display: none; }
+            #map { height: 300px; }
         }
     </style>
 </head>
@@ -109,7 +119,8 @@
 
     <section id="tarieven" style="background-color: var(--light);">
         <div class="container">
-            <h2>Tarieven & Regio</h2>
+            <h2>Tarieven & Servicegebied</h2>
+            
             <div style="max-width: 600px; margin: 0 auto;" class="pricing-box">
                 <h3>Pasfotoset aan huis</h3>
                 <p>Inclusief 6 officiële pasfoto's volgens de RDW/overheidseisen.</p>
@@ -120,6 +131,29 @@
                     🛡️ 100% Goedkeuringsgarantie: Mocht de foto onverhoopt worden geweigerd door de gemeente? Dan komen we kosteloos terug voor een nieuwe foto.
                 </div>
             </div>
+
+            <div class="map-container">
+                <h3>Voorrijkosten binnen West-Friesland</h3>
+                <p style="margin-bottom: 15px; font-size: 15px; color: #666;">Bekijk op de kaart in welke zone uw woonplaats valt.</p>
+                
+                <div id="map"></div>
+                
+                <div class="map-links map-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #27ae60;"></span>
+                        <strong>Zone Hoorn (0-2 km):</strong> Gratis voorrijkosten
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.4); border: 2px solid #3498db;"></span>
+                        <strong>Ring 1 (tot 10 km):</strong> + € 10,- voorrijkosten
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.3); border: 2px solid #9b59b6;"></span>
+                        <strong>Ring 2 (tot 20 km):</strong> + € 20,- voorrijkosten
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -142,5 +176,41 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        // Coördinaten van Hoorn (Centrum/Zwaag/Blokker regio)
+        const hoornCoords = [52.65, 5.06];
+
+        // Kaart initialiseren en focussen op West-Friesland
+        const map = L.map('map').setView([52.67, 5.06], 10.5);
+
+        // OpenStreetMap achtergrond laden
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Marker op Hoorn plaatsen
+        const marker = L.marker(hoornCoords).addTo(map);
+        marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag & Blokker.").openPopup();
+
+        // Ring 1: 10 kilometer (Blauw)
+        const ring1 = L.circle(hoornCoords, {
+            color: '#3498db',
+            fillColor: '#3498db',
+            fillOpacity: 0.15,
+            radius: 10000 // meters
+        }).addTo(map);
+        ring1.bindPopup("<b>Ring 1 (binnen 10 km)</b><br>Voorrijkosten: € 10,-");
+
+        // Ring 2: 20 kilometer (Paars)
+        const ring2 = L.circle(hoornCoords, {
+            color: '#9b59b6',
+            fillColor: '#9b59b6',
+            fillOpacity: 0.08,
+            radius: 20000 // meters
+        }).addTo(map);
+        ring2.bindPopup("<b>Ring 2 (binnen 20 km)</b><br>Voorrijkosten: € 20,-");
+    </script>
 </body>
 </html>

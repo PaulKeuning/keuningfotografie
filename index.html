@@ -20,9 +20,13 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         
         /* Header & Navigatie - Z-INDEX VERHOOGD NAAR 1000 TEGEN DOORSCROLLEN */
-        header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 20px 0; position: sticky; top: 0; z-index: 1000; }
+        header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 24px; font-weight: bold; color: var(--primary); }
+        
+        /* Logo Styling */
+        .logo { display: flex; align-items: center; }
+        .logo img { height: 50px; width: auto; max-width: 100%; display: block; }
+        
         .nav-links a { color: var(--dark); text-decoration: none; margin-left: 20px; font-weight: 500; }
         .nav-links a:hover { color: var(--accent); }
 
@@ -77,6 +81,7 @@
             .hero h1 { font-size: 30px; }
             .nav-links { display: none; }
             #map { height: 300px; }
+            .logo img { height: 40px; } /* Iets compacter op mobiel */
         }
     </style>
 </head>
@@ -84,7 +89,9 @@
 
     <header>
         <div class="container nav-container">
-            <div class="logo">Keuning Fotografie</div>
+            <div class="logo">
+                <img src="Keuning Fotografie logo.png" alt="Keuning Fotografie Logo">
+            </div>
             <nav class="nav-links">
                 <a href="#hoe-werkt-het">Hoe werkt het</a>
                 <a href="#tarieven">Tarieven</a>
@@ -108,7 +115,7 @@
                 <div class="step">
                     <span class="step-number">1</span>
                     <h3>Afspraak plannen</h3>
-                    <p>U neemt contact met ons op via e-mail en we plannen een moment dat u uitkomt.</p>
+                    <p>U neemt contact met ons op via e-mail and we plannen een moment dat u uitkomt.</p>
                 </div>
                 <div class="step">
                     <span class="step-number">2</span>

@@ -19,16 +19,69 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark); line-height: 1.6; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         
-        /* Header & Navigatie - Z-INDEX VERHOOGD NAAR 1000 TEGEN DOORSCROLLEN */
-        header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        /* Dynamic Header & Navigatie */
+        header { 
+            background: #fff; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            padding: 20px 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            transition: all 0.4s ease; /* Zorgt voor vloeiende overgang bij scrollen */
+        }
+        
+        /* De container dwingt een flex-direction af die we kunnen veranderen */
+        .nav-container { 
+            display: flex; 
+            flex-direction: column; /* Logo boven, menu onder */
+            align-items: center; 
+            gap: 15px;
+            transition: all 0.4s ease;
+        }
         
         /* Logo Styling */
-        .logo { display: flex; align-items: center; }
-        .logo img { height: 50px; width: auto; max-width: 100%; display: block; }
+        .logo { 
+            display: flex; 
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+        .logo img { 
+            height: 120px; /* Lekker duidelijk en groot bovenaan */
+            width: auto; 
+            display: block; 
+            transition: all 0.4s ease;
+        }
         
-        .nav-links a { color: var(--dark); text-decoration: none; margin-left: 20px; font-weight: 500; }
+        /* Menu Links */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+        .nav-links a { 
+            color: var(--dark); 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-weight: 500; 
+        }
         .nav-links a:hover { color: var(--accent); }
+
+        /* --- STYLING WANNEER ER GESCROLLED IS (.scrolled wordt via JS toegevoegd) --- */
+        header.scrolled {
+            padding: 10px 0;
+        }
+        header.scrolled .nav-container {
+            flex-direction: row; /* Logo en menu naast elkaar */
+            justify-content: space-between;
+            gap: 0;
+        }
+        header.scrolled .logo img {
+            height: 50px; /* Compact formaat tijdens scrollen */
+        }
+        header.scrolled .nav-links a {
+            margin-left: 20px;
+            margin-right: 0;
+        }
 
         /* Hero Sectie */
         .hero { background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; color: #fff; padding: 100px 0; text-align: center; }
@@ -76,18 +129,19 @@
         /* Footer */
         footer { background: #222; color: #888; text-align: center; padding: 20px 0; font-size: 14px; }
 
-        /* Mobiel */
+        /* Mobiel (Menu verbergen, logo centreren) */
         @media (max-width: 768px) {
             .hero h1 { font-size: 30px; }
             .nav-links { display: none; }
             #map { height: 300px; }
-            .logo img { height: 40px; } /* Iets compacter op mobiel */
+            .logo img { height: 80px !important; } /* Iets compacter op mobiel, negeer scroll-grootte */
+            header { padding: 10px 0 !important; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <header id="main-header">
         <div class="container nav-container">
             <div class="logo">
                 <img src="Keuning Fotografie logo.png" alt="Keuning Fotografie Logo">
@@ -263,6 +317,16 @@
 
             // Kleine fix om te zorgen dat de kaart altijd goed rendert in browsers
             setTimeout(function(){ map.invalidateSize(); }, 400);
+
+            // --- NIEUW: SCRIPT VOOR HET SCROLL-EFFECT VAN DE HEADER ---
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
         });
     </script>
 </body>

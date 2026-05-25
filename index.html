@@ -131,6 +131,7 @@
             <div class="pricing-grid">
                 <div class="pricing-box">
                     <div>
+                        <span style="background: var(--accent); color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">Persoonlijke afspraak</span>
                         <h3>Pasfotoset aan huis</h3>
                         <p style="color: #666; font-size: 14px;">Voor één persoon</p>
                         <div class="price">€ 39,50</div>
@@ -170,15 +171,15 @@
                 
                 <div class="map-legend">
                     <div class="legend-item">
-                        <span class="legend-color" style="background: transparent; border: 3px solid #2ecc71;"></span>
+                        <span class="legend-color" style="background: rgba(46, 204, 113, 0.4); border: 2px solid #2ecc71;"></span>
                         <div><strong>Zone Hoorn (tot 3 km):</strong> Gratis voorrijkosten</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: transparent; border: 3px solid #3498db;"></span>
+                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.25); border: 2px solid #3498db;"></span>
                         <div><strong>Ring 1 (tot 13 km):</strong> + € 10,- voorrijkosten</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: transparent; border: 3px solid #9b59b6;"></span>
+                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.15); border: 2px solid #9b59b6;"></span>
                         <div><strong>Ring 2 (tot 23 km):</strong> + € 20,- voorrijkosten</div>
                     </div>
                     <div class="map-note">
@@ -213,11 +214,8 @@
     <script>
         window.addEventListener('load', function() {
             const hoornCoords = [52.652, 5.065];
-            
-            // Kaart initialiseren
-            const map = L.map('map').setView([52.67, 5.08], 10);
+            const map = L.map('map').setView([52.68, 5.05], 10);
 
-            // De altijd werkende OpenStreetMap laag teruggezet
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '© OpenStreetMap contributors'
@@ -226,31 +224,51 @@
             const marker = L.marker(hoornCoords).addTo(map);
             marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag &amp; Blokker.").openPopup();
 
-            // We maken de cirkels transparant van binnen (fill: false) 
-            // Hierdoor verkleuren ze het water niet, en zie je alleen de strakke grenslijnen!
-
-            // Zone Hoorn: 3 kilometer (Groen)
-            L.circle(hoornCoords, {
+            // ZONE 1: Directe omgeving Hoorn (Inclusief Zwaag en Blokker, stopt exact bij het water)
+            const zoneHoornKust = [
+                [52.636, 5.045], [52.641, 5.092], [52.650, 5.105], // Kustlijn Hoorn
+                [52.675, 5.100], [52.685, 5.060], [52.675, 5.020], // Bovenkant Zwaag/Blokker
+                [52.645, 5.020]
+            ];
+            L.polygon(zoneHoornKust, {
                 color: '#2ecc71',
-                fill: false,
-                weight: 4,      // Iets dikkere lijn voor betere leesbaarheid
-                radius: 3000
+                fillColor: '#2ecc71',
+                fillOpacity: 0.4,
+                weight: 2
             }).addTo(map);
 
-            // Ring 1: 13 kilometer (Blauw)
-            L.circle(hoornCoords, {
+            // ZONE 2: Tot 13 km (Volgt perfect de contouren van de dijk: Schardam -> Hoorn -> Enkhuizen)
+            const ring1Kust = [
+                [52.607, 5.008], // Dijk bij Schardam
+                [52.636, 5.045], [52.641, 5.092], [52.650, 5.105], // Langs Hoorn
+                [52.633, 5.145], [52.637, 5.215], // Kust Schellinkhout / Wijdenes / Venhuizen
+                [52.673, 5.302], // Enkhuizen Hoek
+                [52.715, 5.230], [52.747, 5.115], // Noordelijke dijk richting Medemblik
+                // Binnenlandse grens (13km straal vanaf Hoorn)
+                [52.750, 5.000], [52.710, 4.930], [52.650, 4.910], [52.600, 4.950]
+            ];
+            L.polygon(ring1Kust, {
                 color: '#3498db',
-                fill: false,
-                weight: 4,
-                radius: 13000
+                fillColor: '#3498db',
+                fillOpacity: 0.25,
+                weight: 2
             }).addTo(map);
 
-            // Ring 2: 23 kilometer (Paars)
-            L.circle(hoornCoords, {
+            // ZONE 3: Tot 23 km (Helemaal doorgetrokken tot Den Oever / Medemblik / Alkmaar)
+            const ring2Kust = [
+                [52.545, 5.040], // Dijk Volendam / Edam
+                [52.607, 5.008], // Schardam
+                [52.673, 5.302], // Enkhuizen
+                [52.771, 5.118], // Medemblik kust
+                [52.925, 5.040], // Den Oever / Afsluitdijk begin
+                // Grote boog door het binnenland (Schagen, Alkmaar, Purmerend)
+                [52.850, 4.800], [52.730, 4.750], [52.630, 4.780], [52.530, 4.850]
+            ];
+            L.polygon(ring2Kust, {
                 color: '#9b59b6',
-                fill: false,
-                weight: 4,
-                radius: 23000
+                fillColor: '#9b59b6',
+                fillOpacity: 0.15,
+                weight: 2
             }).addTo(map);
 
             setTimeout(function(){ map.invalidateSize(); }, 400);

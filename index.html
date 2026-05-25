@@ -3,16 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keuning Fotografie - Pasfoto's aan huis</title>
+    <title>Keuning Fotografie | Pasfoto's aan huis</title>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; text-align: center; padding: 50px; }
-        .btn { background: #333; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        /* Basis Stijlen */
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #333333;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header & Navigatie */
+        header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 20px 0; position: sticky; top: 0; z-index: 100; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--primary); }
+        .nav-links a { color: var(--dark); text-decoration: none; margin-left: 20px; font-weight: 500; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Hero Sectie */
+        .hero { background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; color: #fff; padding: 100px 0; text-align: center; }
+        .hero h1 { font-size: 40px; margin-bottom: 20px; }
+        .hero p { font-size: 20px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        /* Knoppen */
+        .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
+        .btn:hover { background: #cf6d17; }
+
+        /* Secties Algemeen */
+        section { padding: 80px 0; }
+        section h2 { text-align: center; font-size: 32px; margin-bottom: 40px; color: var(--primary); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+
+        /* Hoe het werkt */
+        .step { background: var(--light); padding: 30px; border-radius: 8px; text-align: center; }
+        .step-number { background: var(--accent); color: #fff; width: 40px; height: 40px; line-height: 40px; border-radius: 50%; display: inline-block; font-weight: bold; margin-bottom: 15px; }
+
+        /* Tarieven & Regio */
+        .pricing-box { border: 2px solid var(--light); padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .price { font-size: 48px; font-weight: bold; color: var(--primary); margin: 20px 0; }
+        .guarantee { background: #e8f4fd; color: #1d6fa5; padding: 15px; border-radius: 5px; margin-top: 30px; font-weight: 500; }
+
+        /* Contact / Call to Action */
+        .cta { background: var(--primary); color: #fff; text-align: center; }
+        .cta h2 { color: #fff; }
+        .contact-details { margin-top: 30px; font-size: 18px; }
+        .contact-details p { margin: 10px 0; }
+
+        /* Footer */
+        footer { background: #222; color: #888; text-align: center; padding: 20px 0; font-size: 14px; }
+
+        /* Mobiel */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 30px; }
+            .nav-links { display: none; } /* Simpel voor nu */
+        }
     </style>
 </head>
 <body>
-    <h1>Keuning Fotografie</h1>
-    <p>Binnenkort online: Dé pasfotoservice bij u aan huis in de regio.</p>
-    <br>
-    <a href="mailto:info@keuningfotografie.nl" class="btn">Neem contact op</a>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">Keuning Fotografie</div>
+            <nav class="nav-links">
+                <a href="#hoe-werkt-it">Hoe werkt het</a>
+                <a href="#tarieven">Tarieven</a>
+                <a href="#contact">Afspraak maken</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Officiële pasfoto's bij u aan huis</h1>
+            <p>Geen gedoe met reizen of wachttijden. Wij komen naar u toe in [Uw Regio / Stad] voor goedgekeurde pasfoto's voor paspoort, ID-kaart of rijbewijs.</p>
+            <a href="#contact" class="btn">Maak direct een afspraak</a>
+        </div>
+    </section>
+
+    <section id="hoe-werkt-it">
+        <div class="container">
+            <h2>Hoe werkt onze service?</h2>
+            <div class="grid">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h3>Afspraak plannen</h3>
+                    <p>U neemt contact met ons op via telefoon, WhatsApp of e-mail en we plannen een moment dat u uitkomt.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h3>Foto aan huis</h3>
+                    <p>Wij komen bij u langs met een mobiele achtergrond en professionele flitsers. We hebben weinig ruimte nodig.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h3>Direct klaar</h3>
+                    <p>De foto's worden direct gecontroleerd op de wettelijke eisen, ter plekke geprint en netjes uitgesneden.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tarieven" style="background-color: var(--light);">
+        <div class="container">
+            <h2>Tarieven & Regio</h2>
+            <div style="max-width: 600px; margin: 0 auto;" class="pricing-box">
+                <h3>Pasfotoset aan huis</h3>
+                <p>Inclusief 4 of 6 officiële pasfoto's volgens de RDW/overheidseisen.</p>
+                <div class="price">€ 29,50</div>
+                <p><em>* Geen voorrijkosten in [Plaatsnaam 1], [Plaatsnaam 2] en [Plaatsnaam 3].</em></p>
+                
+                <div class="guarantee">
+                    🛡️ 100% Goedkeuringsgarantie: Mocht de foto onverhoopt worden geweigerd door de gemeente? Dan komen we kosteloos terug voor een nieuwe foto.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta">
+        <div class="container">
+            <h2>Direct een afspraak maken?</h2>
+            <p>Bel, WhatsApp of mail ons om een datum en tijdstip te reserveren.</p>
+            
+            <div class="contact-details">
+                <p><strong>📞 Telefoon / WhatsApp:</strong> <a href="tel:0612345678" style="color: #fff;">06 - 12 34 56 78</a></p>
+                <p><strong>✉️ E-mail:</strong> <a href="mailto:info@keuningfotografie.nl" style="color: #fff;">info@keuningfotografie.nl</a></p>
+            </div>
+            <br><br>
+            <a href="mailto:info@keuningfotografie.nl" class="btn" style="background: #fff; color: var(--primary);">Stuur een e-mail</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Keuning Fotografie. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
 </body>
 </html>

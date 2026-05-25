@@ -58,12 +58,6 @@
         .map-container { max-width: 800px; margin: 40px auto 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         #map { height: 450px; width: 100%; border-radius: 6px; background: #eee; }
 
-        /* CSS Magie: Zorg dat de cirkels onder het water/landvlak vallen */
-        .bg-circles {
-            mix-blend-mode: multiply;
-            opacity: 0.85;
-        }
-
         .map-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; padding: 20px; background: var(--light); border-radius: 6px; text-align: left; }
         .legend-item { display: flex; align-items: center; font-size: 15px; }
         .legend-color { width: 22px; height: 22px; border-radius: 50%; margin-right: 15px; display: inline-block; flex-shrink: 0; }
@@ -119,7 +113,7 @@
                 <div class="step">
                     <span class="step-number">2</span>
                     <h3>Foto aan huis</h3>
-                    <p>Wij komen bij u langs met een mobiele achtergrond ien professionele flitsers. We hebben weinig ruimte nodig.</p>
+                    <p>Wij komen bij u langs met een mobiele achtergrond en professionele flitsers. We hebben weinig ruimte nodig.</p>
                 </div>
                 <div class="step">
                     <span class="step-number">3</span>
@@ -176,15 +170,15 @@
                 
                 <div class="map-legend">
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(46, 204, 113, 0.4); border: 2px solid #2ecc71;"></span>
+                        <span class="legend-color" style="background: transparent; border: 3px solid #2ecc71;"></span>
                         <div><strong>Zone Hoorn (tot 3 km):</strong> Gratis voorrijkosten</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.35); border: 2px solid #3498db;"></span>
+                        <span class="legend-color" style="background: transparent; border: 3px solid #3498db;"></span>
                         <div><strong>Ring 1 (tot 13 km):</strong> + € 10,- voorrijkosten</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.25); border: 2px solid #9b59b6;"></span>
+                        <span class="legend-color" style="background: transparent; border: 3px solid #9b59b6;"></span>
                         <div><strong>Ring 2 (tot 23 km):</strong> + € 20,- voorrijkosten</div>
                     </div>
                     <div class="map-note">
@@ -220,27 +214,47 @@
         window.addEventListener('load', function() {
             const hoornCoords = [52.652, 5.065];
             
-            // We initialiseren de kaart
+            // Kaart initialiseren
             const map = L.map('map').setView([52.67, 5.08], 10);
 
-            // We maken een aparte laag (pane) aan die we ACHTER de labels en wegen van de kaart plaatsen
-            const circlePane = map.createPane('circlePane');
-            circlePane.style.zIndex = 199; // Dit dwingt de cirkels onder de land- en waterlagen te blijven
-            circlePane.className += ' bg-circles';
-
-            // We gebruiken een rustige, moderne kaartstijl (CartoDB Positron) die perfect samenwerkt met blend-modes
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                subdomains: 'abcd',
-                maxZoom: 20
+            // De altijd werkende OpenStreetMap laag teruggezet
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap contributors'
             }).addTo(map);
 
             const marker = L.marker(hoornCoords).addTo(map);
             marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag &amp; Blokker.").openPopup();
 
+            // We maken de cirkels transparant van binnen (fill: false) 
+            // Hierdoor verkleuren ze het water niet, en zie je alleen de strakke grenslijnen!
+
             // Zone Hoorn: 3 kilometer (Groen)
             L.circle(hoornCoords, {
                 color: '#2ecc71',
-                fillColor: '#2ecc71',
-                fillOpacity: 0.4,
-                radius: 3000,
+                fill: false,
+                weight: 4,      // Iets dikkere lijn voor betere leesbaarheid
+                radius: 3000
+            }).addTo(map);
+
+            // Ring 1: 13 kilometer (Blauw)
+            L.circle(hoornCoords, {
+                color: '#3498db',
+                fill: false,
+                weight: 4,
+                radius: 13000
+            }).addTo(map);
+
+            // Ring 2: 23 kilometer (Paars)
+            L.circle(hoornCoords, {
+                color: '#9b59b6',
+                fill: false,
+                weight: 4,
+                radius: 23000
+            }).addTo(map);
+
+            setTimeout(function(){ map.invalidateSize(); }, 400);
+        });
+    </script>
+</body>
+</html>

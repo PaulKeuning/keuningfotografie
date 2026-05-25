@@ -182,7 +182,7 @@
                         <div><strong>Ring 2 (tot 23 km):</strong> + € 20,- voorrijkosten</div>
                     </div>
                     <div class="map-note">
-                        📍 <strong>Woont u buiten deze ringen?</strong> Geen probleem! Neem gerust contact met ons op, dan overleggen we even over de mogelijkheden.
+                        📍 <strong>Woont u buiten deze ringen?</strong> Geen probleem! Neem gerust contact met ons op, dan overlegen we even over de mogelijkheden.
                     </div>
                 </div>
             </div>
@@ -209,59 +209,86 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
         window.addEventListener('load', function() {
             const hoornCoords = [52.652, 5.065];
-            const map = L.map('map').setView([52.68, 5.12], 10);
-
-            // 1. Onderste laag: De basiskaart (OpenStreetMap)
+            
+            // Originele OpenStreetMap teruggezet voor maximale scherpte
+            const map = L.map('map').setView([52.69, 5.08], 10);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
 
-            // 2. Middelste laag: De perfecte cirkels (ingekleurd)
-            
+            const marker = L.marker(hoornCoords).addTo(map);
+            marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag &amp; Blokker.").openPopup();
+
+            // Vloeiende, gedetailleerde kustlijn-polygoon van de dijk
+            const landMaskerGeoJSON = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [4.70, 52.95], // Kop van NH
+                        [4.942, 52.934], [5.041, 52.911], // Den Oever
+                        [5.074, 52.839], [5.122, 52.781], // Richting Medemblik
+                        [5.114, 52.768], [5.130, 52.767], [5.155, 52.748], // Medemblik kust detail
+                        [5.176, 52.723], [5.203, 52.705], [5.244, 52.706], // Wervershoof / Andijk
+                        [5.285, 52.693], [5.313, 52.673], [5.304, 52.645], // Enkhuizen ronding
+                        [5.263, 52.637], [5.215, 52.633], [5.150, 52.630], // Wijdenes / Schellinkhout
+                        [5.094, 52.641], [5.056, 52.637], // Hoorn kust
+                        [5.035, 52.616], [5.004, 52.601], // Schardam
+                        [5.047, 52.545], [5.060, 52.495], // Volendam / Monnickendam
+                        [4.70, 52.45]  // Diep in het binnenland terug naar start
+                    ]]
+                }
+            };
+
+            // Functie die een ECHTE vloeiende cirkel maakt en hem direct afknipt bij de dijk
+            function drawPerfectClippedCircle(center, radiusKm, styleOptions) {
+                const centerPoint = turf.point([center[1], center[0]]);
+                // Maak een perfecte cirkel met 64 hoeken (visueel 100% vloeiend rond)
+                const perfectCircle = turf.buffer(centerPoint, radiusKm, {units: 'kilometers', steps: 64});
+                
+                try {
+                    // Snijd de perfecte cirkel exact af langs de dijk-coördinaten
+                    const clipped = turf.intersection(perfectCircle, landMaskerGeoJSON);
+                    if (clipped) {
+                        L.geoJSON(clipped, {
+                            style: function() { return styleOptions; }
+                        }).addTo(map);
+                    }
+                } catch (error) {
+                    // Fallback mocht er iets haperen
+                    L.circle(center, { radius: radiusKm * 1000, ...styleOptions }).addTo(map);
+                }
+            }
+
             // Zone Hoorn: 3 kilometer (Groen)
-            L.circle(hoornCoords, {
+            drawPerfectClippedCircle(hoornCoords, 3, {
                 color: '#2ecc71',
                 fillColor: '#2ecc71',
                 fillOpacity: 0.4,
-                weight: 2,
-                radius: 3000
-            }).addTo(map);
+                weight: 2
+            });
 
             // Ring 1: 13 kilometer (Blauw)
-            L.circle(hoornCoords, {
+            drawPerfectClippedCircle(hoornCoords, 13, {
                 color: '#3498db',
                 fillColor: '#3498db',
                 fillOpacity: 0.25,
-                weight: 2,
-                radius: 13000
-            }).addTo(map);
+                weight: 2
+            });
 
             // Ring 2: 23 kilometer (Paars)
-            L.circle(hoornCoords, {
+            drawPerfectClippedCircle(hoornCoords, 23, {
                 color: '#9b59b6',
                 fillColor: '#9b59b6',
                 fillOpacity: 0.15,
-                weight: 2,
-                radius: 23000
-            }).addTo(map);
-
-            // 3. Bovenste laag: De watermasker-laag van OpenTopoMap
-            // Deze tile-server herhaalt puur het blauwe water en de kustlijnen, en legt deze OVER de cirkels heen.
-            L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-                maxZoom: 17,
-                opacity: 1.0,
-                // We filteren via CSS zodat alleen het blauwe water de cirkels overschrijft
-                className: 'water-mask-layer'
-            }).addTo(map);
-
-            // 4. De marker (Altijd helemaal bovenaan)
-            const marker = L.marker(hoornCoords).addTo(map);
-            marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag &amp; Blokker.").openPopup();
+                weight: 2
+            });
 
             setTimeout(function(){ map.invalidateSize(); }, 400);
         });

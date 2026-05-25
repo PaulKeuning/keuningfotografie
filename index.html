@@ -58,6 +58,12 @@
         .map-container { max-width: 800px; margin: 40px auto 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         #map { height: 450px; width: 100%; border-radius: 6px; background: #eee; }
 
+        /* CSS Magie: Zorg dat de cirkels onder het water/landvlak vallen */
+        .bg-circles {
+            mix-blend-mode: multiply;
+            opacity: 0.85;
+        }
+
         .map-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; padding: 20px; background: var(--light); border-radius: 6px; text-align: left; }
         .legend-item { display: flex; align-items: center; font-size: 15px; }
         .legend-color { width: 22px; height: 22px; border-radius: 50%; margin-right: 15px; display: inline-block; flex-shrink: 0; }
@@ -113,7 +119,7 @@
                 <div class="step">
                     <span class="step-number">2</span>
                     <h3>Foto aan huis</h3>
-                    <p>Wij komen bij u langs met een mobiele achtergrond en professionele flitsers. We hebben weinig ruimte nodig.</p>
+                    <p>Wij komen bij u langs met een mobiele achtergrond ien professionele flitsers. We hebben weinig ruimte nodig.</p>
                 </div>
                 <div class="step">
                     <span class="step-number">3</span>
@@ -126,7 +132,7 @@
 
     <section id="tarieven" style="background-color: var(--light);">
         <div class="container">
-            <h2>Tarieven & Opties</h2>
+            <h2>Tarieven &amp; Opties</h2>
             
             <div class="pricing-grid">
                 <div class="pricing-box">
@@ -137,7 +143,7 @@
                         <ul class="feature-list">
                             <li>Keuze uit <strong>Hardcopy</strong> (6 geprinte foto's) óf <strong>Digitaal</strong> bestand via e-mail.</li>
                             <li>Beide opties ontvangen? Slechts <strong>+ € 10,-</strong> extra.</li>
-                            <li>100% goedgekeurd volgens RDW & overheidseisen.</li>
+                            <li>100% goedgekeurd volgens RDW &amp; overheidseisen.</li>
                         </ul>
                     </div>
                     <div class="guarantee">
@@ -155,7 +161,7 @@
                             <li>1e persoon betaalt het basistarief (€ 39,50).</li>
                             <li><strong>Vanaf de 2e persoon</strong> slechts € 20,- per set!</li>
                             <li>Bijvoorbeeld om samen te voegen met buren of gezinsleden.</li>
-                            <li>Ideaal voor een bedrijf of verzorgingshuis.</li>
+                            <li>Ideaal voor een bedrijf of verzorgingstehuis.</li>
                         </ul>
                     </div>
                     <p style="font-size: 13px; color: #666; font-style: italic;">Alle personen worden tijdens dezelfde afspraak gefotografeerd.</p>
@@ -174,11 +180,11 @@
                         <div><strong>Zone Hoorn (tot 3 km):</strong> Gratis voorrijkosten</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.25); border: 2px solid #3498db;"></span>
+                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.35); border: 2px solid #3498db;"></span>
                         <div><strong>Ring 1 (tot 13 km):</strong> + € 10,- voorrijkosten</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.15); border: 2px solid #9b59b6;"></span>
+                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.25); border: 2px solid #9b59b6;"></span>
                         <div><strong>Ring 2 (tot 23 km):</strong> + € 20,- voorrijkosten</div>
                     </div>
                     <div class="map-note">
@@ -209,76 +215,32 @@
         </div>
     </footer>
 
-    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
         window.addEventListener('load', function() {
             const hoornCoords = [52.652, 5.065];
-            const map = L.map('map').setView([52.69, 5.05], 10);
+            
+            // We initialiseren de kaart
+            const map = L.map('map').setView([52.67, 5.08], 10);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '© OpenStreetMap contributors'
+            // We maken een aparte laag (pane) aan die we ACHTER de labels en wegen van de kaart plaatsen
+            const circlePane = map.createPane('circlePane');
+            circlePane.style.zIndex = 199; // Dit dwingt de cirkels onder de land- en waterlagen te blijven
+            circlePane.className += ' bg-circles';
+
+            // We gebruiken een rustige, moderne kaartstijl (CartoDB Positron) die perfect samenwerkt met blend-modes
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
             }).addTo(map);
 
             const marker = L.marker(hoornCoords).addTo(map);
-            marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag & Blokker.").openPopup();
+            marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag &amp; Blokker.").openPopup();
 
-            // Officiële, lichte GeoJSON grens van de regio West-Friesland (stopt exact bij het water)
-            const westFrieslandGeoJSON = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [4.88, 52.73], [4.92, 52.78], [5.00, 52.79], [5.12, 52.73], 
-                        [5.20, 52.73], [5.30, 52.68], [5.24, 52.60], [5.15, 52.60], 
-                        [5.08, 52.63], [4.98, 52.62], [4.90, 52.64], [4.88, 52.73]
-                    ]]
-                }
-            };
-
-            // Functie die een Turf-cirkel maakt en deze 'snijdt' met de landgrens
-            function createLandOnlyCircle(center, radiusKm, drawOptions) {
-                const turfCenter = turf.point([center[1], center[0]]);
-                const turfCircle = turf.buffer(turfCenter, radiusKm, {units: 'kilometers'});
-                
-                try {
-                    const intersected = turf.intersection(turfCircle, westFrieslandGeoJSON);
-                    if (intersected) {
-                        L.geoJSON(intersected, drawOptions).addTo(map);
-                    }
-                } catch (e) {
-                    // Terugvallen op normale cirkel mocht er lokaal een turf-error ontstaan
-                    L.circle(center, { radius: radiusKm * 1000, ...drawOptions }).addTo(map);
-                }
-            }
-
-            // Zone Hoorn: 3 kilometer (Groen) op het land
-            createLandOnlyCircle(hoornCoords, 3, {
+            // Zone Hoorn: 3 kilometer (Groen)
+            L.circle(hoornCoords, {
                 color: '#2ecc71',
                 fillColor: '#2ecc71',
                 fillOpacity: 0.4,
-                weight: 2
-            });
-
-            // Ring 1: 13 kilometer (Blauw) op het land
-            createLandOnlyCircle(hoornCoords, 13, {
-                color: '#3498db',
-                fillColor: '#3498db',
-                fillOpacity: 0.25,
-                weight: 2
-            });
-
-            // Ring 2: 23 kilometer (Paars) op het land
-            createLandOnlyCircle(hoornCoords, 23, {
-                color: '#9b59b6',
-                fillColor: '#9b59b6',
-                fillOpacity: 0.15,
-                weight: 2
-            });
-
-            setTimeout(function(){ map.invalidateSize(); }, 400);
-        });
-    </script>
-</body>
-</html>
+                radius: 3000,

@@ -52,9 +52,10 @@
         /* Kaart styling */
         .map-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         #map { height: 450px; width: 100%; border-radius: 6px; z-index: 1; }
-        .map-legend { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 20px; padding: 15px; background: var(--light); border-radius: 6px; }
-        .legend-item { display: flex; align-items: center; font-size: 15px; margin: 5px 10px; }
-        .legend-color { width: 20px; height: 20px; border-radius: 50%; margin-right: 10px; display: inline-block; }
+        .map-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; padding: 20px; background: var(--light); border-radius: 6px; text-align: left; }
+        .legend-item { display: flex; align-items: center; font-size: 15px; }
+        .legend-color { width: 22px; height: 22px; border-radius: 50%; margin-right: 15px; display: inline-block; flex-shrink: 0; }
+        .map-note { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; font-style: italic; color: #555; text-align: center; width: 100%; }
 
         /* Contact / Call to Action */
         .cta { background: var(--primary); color: #fff; text-align: center; }
@@ -125,7 +126,7 @@
                 <h3>Pasfotoset aan huis</h3>
                 <p>Inclusief 6 officiële pasfoto's volgens de RDW/overheidseisen.</p>
                 <div class="price">€ 39,50</div>
-                <p><em>* Geen voorrijkosten in Hoorn, Zwaag en Blokker.</em></p>
+                <p><em>* Geen voorrijkosten in Hoorn, Zwaag en Blokker (Zone Hoorn).</em></p>
                 
                 <div class="guarantee">
                     🛡️ 100% Goedkeuringsgarantie: Mocht de foto onverhoopt worden geweigerd door de gemeente? Dan komen we kosteloos terug voor een nieuwe foto.
@@ -134,22 +135,25 @@
 
             <div class="map-container">
                 <h3>Voorrijkosten binnen West-Friesland</h3>
-                <p style="margin-bottom: 15px; font-size: 15px; color: #666;">Bekijk op de kaart in welke zone uw woonplaats valt.</p>
+                <p style="margin-bottom: 15px; font-size: 15px; color: #666;">Bekijk op de kaart in welke zone uw woonplaats valt. U kunt inzoomen op uw eigen straat.</p>
                 
                 <div id="map"></div>
                 
-                <div class="map-links map-legend">
+                <div class="map-legend">
                     <div class="legend-item">
-                        <span class="legend-color" style="background: #27ae60;"></span>
-                        <strong>Zone Hoorn (0-2 km):</strong> Gratis voorrijkosten
+                        <span class="legend-color" style="background: rgba(46, 204, 113, 0.25); border: 2px solid #2ecc71;"></span>
+                        <div><strong>Zone Hoorn (tot 2 km):</strong> Gratis voorrijkosten (Hoorn, Zwaag, Blokker)</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.4); border: 2px solid #3498db;"></span>
-                        <strong>Ring 1 (tot 10 km):</strong> + € 10,- voorrijkosten
+                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.15); border: 2px solid #3498db;"></span>
+                        <div><strong>Ring 1 (tot 12 km):</strong> + € 10,- voorrijkosten</div>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.3); border: 2px solid #9b59b6;"></span>
-                        <strong>Ring 2 (tot 20 km):</strong> + € 20,- voorrijkosten
+                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.08); border: 2px solid #9b59b6;"></span>
+                        <div><strong>Ring 2 (tot 22 km):</strong> + € 20,- voorrijkosten</div>
+                    </div>
+                    <div class="map-note">
+                        📍 <strong>Woont u buiten deze ringen?</strong> Geen probleem! Neem gerust contact met ons op, dan overleggen we even over de mogelijkheden.
                     </div>
                 </div>
             </div>
@@ -163,54 +167,4 @@
             <p>Mail ons om een datum en tijdstip te reserveren.</p>
             
             <div class="contact-details">
-                <p><strong>✉️ E-mail:</strong> <a href="mailto:info@keuningfotografie.nl" style="color: #fff;">info@keuningfotografie.nl</a></p>
-            </div>
-            <br><br>
-            <a href="mailto:info@keuningfotografie.nl" class="btn" style="background: #fff; color: var(--primary);">Stuur een e-mail</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Keuning Fotografie. Alle rechten voorbehouden.</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script>
-        // Coördinaten van Hoorn (Centrum/Zwaag/Blokker regio)
-        const hoornCoords = [52.65, 5.06];
-
-        // Kaart initialiseren en focussen op West-Friesland
-        const map = L.map('map').setView([52.67, 5.06], 10.5);
-
-        // OpenStreetMap achtergrond laden
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Marker op Hoorn plaatsen
-        const marker = L.marker(hoornCoords).addTo(map);
-        marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag & Blokker.").openPopup();
-
-        // Ring 1: 10 kilometer (Blauw)
-        const ring1 = L.circle(hoornCoords, {
-            color: '#3498db',
-            fillColor: '#3498db',
-            fillOpacity: 0.15,
-            radius: 10000 // meters
-        }).addTo(map);
-        ring1.bindPopup("<b>Ring 1 (binnen 10 km)</b><br>Voorrijkosten: € 10,-");
-
-        // Ring 2: 20 kilometer (Paars)
-        const ring2 = L.circle(hoornCoords, {
-            color: '#9b59b6',
-            fillColor: '#9b59b6',
-            fillOpacity: 0.08,
-            radius: 20000 // meters
-        }).addTo(map);
-        ring2.bindPopup("<b>Ring 2 (binnen 20 km)</b><br>Voorrijkosten: € 20,-");
-    </script>
-</body>
-</html>
+                <p><strong>✉️ E-mail:</strong> <a href="mailto:info@keuningfotografie.nl" style="color: #fff;">info@keuningfotografie.nl

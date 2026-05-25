@@ -51,7 +51,7 @@
 
         /* Kaart styling */
         .map-container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        #map { height: 450px; width: 100%; border-radius: 6px; z-index: 1; }
+        #map { height: 450px; width: 100%; border-radius: 6px; background: #eee; }
         .map-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; padding: 20px; background: var(--light); border-radius: 6px; text-align: left; }
         .legend-item { display: flex; align-items: center; font-size: 15px; }
         .legend-color { width: 22px; height: 22px; border-radius: 50%; margin-right: 15px; display: inline-block; flex-shrink: 0; }
@@ -167,4 +167,69 @@
             <p>Mail ons om een datum en tijdstip te reserveren.</p>
             
             <div class="contact-details">
-                <p><strong>✉️ E-mail:</strong> <a href="mailto:info@keuningfotografie.nl" style="color: #fff;">info@keuningfotografie.nl
+                <p><strong>✉️ E-mail:</strong> <a href="mailto:info@keuningfotografie.nl" style="color: #fff;">info@keuningfotografie.nl</a></p>
+            </div>
+            <br><br>
+            <a href="mailto:info@keuningfotografie.nl" class="btn" style="background: #fff; color: var(--primary);">Stuur een e-mail</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Keuning Fotografie. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        // Zorg dat het script pas runt als álles geladen is
+        window.addEventListener('load', function() {
+            // Coördinaten van Hoorn (Zwaag/Blokker regio middelpunt)
+            const hoornCoords = [52.652, 5.065];
+
+            // Kaart initialiseren
+            const map = L.map('map').setView([52.67, 5.08], 10);
+
+            // OpenStreetMap achtergrond laden
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Marker op Hoorn plaatsen
+            const marker = L.marker(hoornCoords).addTo(map);
+            marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag & Blokker.").openPopup();
+
+            // Zone Hoorn: 2 kilometer (Groen)
+            const zoneHoorn = L.circle(hoornCoords, {
+                color: '#2ecc71',
+                fillColor: '#2ecc71',
+                fillOpacity: 0.25,
+                radius: 2000
+            }).addTo(map);
+            zoneHoorn.bindPopup("<b>Zone Hoorn (binnen 2 km)</b><br>Voorrijkosten: Gratis");
+
+            // Ring 1: 12 kilometer (Blauw)
+            const ring1 = L.circle(hoornCoords, {
+                color: '#3498db',
+                fillColor: '#3498db',
+                fillOpacity: 0.15,
+                radius: 12000
+            }).addTo(map);
+            ring1.bindPopup("<b>Ring 1 (binnen 12 km)</b><br>Voorrijkosten: € 10,-");
+
+            // Ring 2: 22 kilometer (Paars)
+            const ring2 = L.circle(hoornCoords, {
+                color: '#9b59b6',
+                fillColor: '#9b59b6',
+                fillOpacity: 0.08,
+                radius: 22000
+            }).addTo(map);
+            ring2.bindPopup("<b>Ring 2 (binnen 22 km)</b><br>Voorrijkosten: € 20,-");
+
+            // Belangrijke fix: Kaart herberekenen na laden
+            setTimeout(function(){ map.invalidateSize(); }, 400);
+        });
+    </script>
+</body>
+</html>

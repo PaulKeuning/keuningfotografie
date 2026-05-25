@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keuning Fotografie | Professionele Fotografie in West-Friesland</title>
     <style>
-        /* Basis Stijlen & Kleuren (Consistent met pasfoto-pagina) */
+        /* Nieuwe Kleurstelling: Charcoal & Sage */
         :root {
-            --primary: #2c3e50;
-            --accent: #e67e22;
-            --light: #f8f9fa;
+            --primary: #5d5652; /* Charcoal */
+            --accent: #a8b39b;  /* Sage */
+            --light: #f5f5f4;   /* Warm lichtgrijs dat mooi kleurt bij charcoal/sage */
             --dark: #333333;
         }
         
@@ -20,7 +20,7 @@
         /* Vaste, stabiele Header & Navigatie */
         header { 
             background: #fff; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
             position: sticky; 
             top: 0; 
             z-index: 1000;
@@ -47,11 +47,12 @@
             display: flex;
         }
         .nav-links a { 
-            color: var(--dark); 
+            color: var(--primary); 
             text-decoration: none; 
             margin-left: 25px; 
             font-weight: 500; 
             white-space: nowrap;
+            transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--accent); }
 
@@ -60,19 +61,19 @@
         section h2 { text-align: center; font-size: 36px; margin-bottom: 20px; color: var(--primary); }
         .section-subtitle { text-align: center; font-size: 18px; color: #666; max-width: 600px; margin: 0 auto 50px auto; }
 
-        /* Hero Sectie (Welkomstscherm) */
+        /* Hero Sectie (Welkomstscherm met sfeervolle overlay) */
         .hero { 
-            background: linear-gradient(rgba(44, 62, 80, 0.75), rgba(44, 62, 80, 0.75)), url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; 
+            background: linear-gradient(rgba(93, 86, 82, 0.8), rgba(93, 86, 82, 0.8)), url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; 
             color: #fff; 
             padding: 140px 0; 
             text-align: center; 
         }
-        .hero h1 { font-size: 48px; margin-bottom: 20px; }
-        .hero p { font-size: 22px; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; font-weight: 600; }
+        .hero p { font-size: 22px; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.9; }
         
         /* Knoppen */
-        .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
-        .btn:hover { background: #cf6d17; }
+        .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s, color 0.3s; }
+        .btn:hover { background: #96a189; }
         .btn-secondary { background: transparent; border: 2px solid #fff; margin-left: 15px; }
         .btn-secondary:hover { background: #fff; color: var(--primary); }
 
@@ -84,7 +85,7 @@
         .service-content h3 { font-size: 22px; margin-bottom: 12px; color: var(--primary); }
         .service-content p { color: #555; font-size: 15px; margin-bottom: 20px; }
         .service-link { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 15px; }
-        .service-link:hover { text-decoration: underline; }
+        .service-link:hover { color: #96a189; text-decoration: underline; }
 
         /* Over Ons / Werkwijze */
         .about-section { background-color: var(--light); }
@@ -100,10 +101,10 @@
         .cta { background: var(--primary); color: #fff; text-align: center; }
         .cta h2 { color: #fff; }
         .contact-details { margin-top: 30px; font-size: 18px; }
-        .contact-details p { margin: 10px 0; }
+        .contact-details p { margin: 10px 0; opacity: 0.9; }
 
         /* Footer */
-        footer { background: #222; color: #888; text-align: center; padding: 20px 0; font-size: 14px; }
+        footer { background: #4a4441; color: #bbb; text-align: center; padding: 20px 0; font-size: 14px; }
 
         /* Mobiel / Tablet optimalisatie */
         @media (max-width: 768px) {
@@ -165,7 +166,7 @@
                 </div>
 
                 <div class="service-card">
-                    <img src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&w=500&q=80" alt="Sportfotografie Basketbal" class="service-img">
+                    <img src="https://images.unsplash.com/photo-1519766304817-4f37bda74a27?auto=format&fit=crop&w=500&q=80" alt="Sportfotografie Basketbal Actie" class="service-img">
                     <div class="service-content">
                         <h3>Sportfotografie</h3>
                         <p>Dynamische en scherpe actiebeelden die de energie, emotie en snelheid van de sport perfect vangen. Of het nu gaat om wedstrijden, teamfoto's of individuele sportportretten op het veld of in de zaal.</p>
@@ -174,7 +175,7 @@
                 </div>
 
                 <div class="service-card">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Portretfotografie" class="service-img">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=500&q=80" alt="Natuurlijke Portretfotografie" class="service-img">
                     <div class="service-content">
                         <h3>Portretfotografie</h3>
                         <p>Puur, ongedwongen en karaktervol. Wij maken prachtige, persoonlijke portretten op locatie of in een vertrouwde omgeving. Ideaal als blijvende herinnering, cadeau of voor persoonlijk gebruik.</p>

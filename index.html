@@ -17,7 +17,7 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark); line-height: 1.6; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         
-        /* Vaste, stabiele Header & Navigatie (Exact zelfde als pasfotoaanhuis.html) */
+        /* Vaste, stabiele Header & Navigatie */
         header { 
             background: #fff; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
@@ -79,7 +79,7 @@
         /* Diensten Grid */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .service-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--accent); display: flex; flex-direction: column; justify-content: space-between; }
-        .service-img { height: 200px; width: 100%; object-fit: cover; background-color: #eee; }
+        .service-img { height: 220px; width: 100%; object-fit: cover; background-color: #eee; }
         .service-content { padding: 25px; flex-grow: 1; }
         .service-content h3 { font-size: 22px; margin-bottom: 12px; color: var(--primary); }
         .service-content p { color: #555; font-size: 15px; margin-bottom: 20px; }
@@ -143,7 +143,7 @@
     <section class="hero">
         <div class="container">
             <h1>Professionals in Beeld</h1>
-            <p>Uw partner voor hoogwaardige zakelijke, persoonlijke en mobiele fotografie in Hoorn en heel West-Friesland.</p>
+            <p>Uw partner voor hoogwaardige sport-, portret- en mobiele fotografie in Hoorn en heel West-Friesland.</p>
             <a href="#diensten" class="btn">Bekijk onze diensten</a>
             <a href="#contact" class="btn btn-secondary">Kennismaken</a>
         </div>
@@ -152,33 +152,33 @@
     <section id="diensten">
         <div class="container">
             <h2>Onze Diensten</h2>
-            <p class="section-subtitle">Of het nu gaat om een krachtige eerste indruk voor uw bedrijf of een comfortabele fotoservice aan huis; wij leggen het perfect vast.</p>
+            <p class="section-subtitle">Ontdek onze specialismen. Van actievolle sportmomenten en pure portretten tot onze unieke pasfotoservice direct aan huis.</p>
             
             <div class="services-grid">
-                <div class="service-card">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=500&q=80" alt="Zakelijke Portretten" class="service-img">
-                    <div class="service-content">
-                        <h3>Zakelijke Portretten</h3>
-                        <p>Een sterke profielfoto voor LinkedIn of een professionele uitstraling voor uw hele team op de bedrijfswebsite. Wij zorgen voor authentieke foto's die betrouwbaarheid uitstralen.</p>
-                        <a href="#contact" class="service-link">Informatie aanvragen &rarr;</a>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=500&q=80" alt="Bedrijfs- & Eventfotografie" class="service-img">
-                    <div class="service-content">
-                        <h3>Bedrijfs- &amp; Eventfotografie</h3>
-                        <p>Breng de dynamiek van uw onderneming in beeld. Van sfeervolle reportages tijdens congressen en evenementen tot professioneel beeldmateriaal van uw bedrijfspand en werkprocessen.</p>
-                        <a href="#contact" class="service-link">Informatie aanvragen &rarr;</a>
-                    </div>
-                </div>
-
                 <div class="service-card" style="border-top-color: var(--primary);">
                     <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=80" alt="Pasfoto's aan Huis" class="service-img">
                     <div class="service-content">
                         <h3>Pasfoto's aan Huis</h3>
-                        <p>Onze unieke service voor West-Friesland. Wij komen met een mobiele studio bij u thuis voor officiële, goedgekeurde pasfoto's (paspoort, ID-kaart, rijbewijs). Ideaal voor senioren of gezinnen.</p>
+                        <p>Onze unieke service voor West-Friesland. Wij komen met een mobiele studio bij u thuis voor officiële, goedgekeurde pasfoto's (paspoort, ID-kaart of rijbewijs). Ideaal voor wie minder mobiel is of kiest voor puur gemak.</p>
                         <a href="pasfotoaanhuis.html" class="service-link" style="color: var(--primary);">Bekijk tarieven &amp; servicegebied &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&w=500&q=80" alt="Sportfotografie Basketbal" class="service-img">
+                    <div class="service-content">
+                        <h3>Sportfotografie</h3>
+                        <p>Dynamische en scherpe actiebeelden die de energie, emotie en snelheid van de sport perfect vangen. Of het nu gaat om wedstrijden, teamfoto's of individuele sportportretten op het veld of in de zaal.</p>
+                        <a href="#contact" class="service-link">Informatie aanvragen &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Portretfotografie" class="service-img">
+                    <div class="service-content">
+                        <h3>Portretfotografie</h3>
+                        <p>Puur, ongedwongen en karaktervol. Wij maken prachtige, persoonlijke portretten op locatie of in een vertrouwde omgeving. Ideaal als blijvende herinnering, cadeau of voor persoonlijk gebruik.</p>
+                        <a href="#contact" class="service-link">Informatie aanvragen &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -190,16 +190,16 @@
             <div class="two-column">
                 <div class="about-text">
                     <h2>Onze Werkwijze</h2>
-                    <p>Bij Keuning Fotografie geloven we dat de beste foto's ontstaan in een ontspannen en professionele sfeer. Of we nu op kantoor langskomen of bij u in de woonkamer staan, we nemen de tijd.</p>
-                    <h3>Puur en persoonlijk</h3>
-                    <p>Geen stijve poses, maar spontane beelden die laten zien wie u écht bent. We maken gebruik van hoogwaardige mobiele apparatuur en professionele nabewerking voor het allerbeste resultaat.</p>
+                    <p>Bij Keuning Fotografie geloven we dat de beste foto's ontstaan in een ontspannen en professionele sfeer. Of we nu langs de lijn staan bij een sportwedstrijd of bij u in de woonkamer, we nemen de tijd.</p>
+                    <h3>Kwaliteit en beleving</h3>
+                    <p>Geen stijve poses, maar spontane beelden die de echte actie of emotie laten zien. We maken gebruik van hoogwaardige camera-apparatuur en professionele nabewerking voor het allerbeste eindresultaat.</p>
                 </div>
                 <div>
                     <ul class="steps-list">
                         <li><strong>1. Flexibele afspraak:</strong> We plannen een moment dat u het beste uitkomt, op uw gewenste locatie.</li>
-                        <li><strong>2. Professionele shoot:</strong> We stellen u op uw gemak en schieten verschillende opties.</li>
-                        <li><strong>3. Direct resultaat of snelle selectie:</strong> Bij pasfoto's drukken we direct af. Bij zakelijke shoots kiest u achteraf rustig uw favorieten uit een online galerij.</li>
-                        <li><strong>4. Snelle digitale levering:</strong> De bewerkte beelden ontvangt u snel en in de hoogste resolutie.</li>
+                        <li><strong>2. Professionele shoot:</strong> We stellen u op uw gemak of vangen de snelle actie feilloos op beeld.</li>
+                        <li><strong>3. Direct resultaat of snelle selectie:</strong> Bij pasfoto's drukken we direct af. Bij shoots kiest u achteraf rustig uw favorieten uit een online galerij.</li>
+                        <li><strong>4. Snelle digitale levering:</strong> De zorgvuldig bewerkte beelden ontvangt u snel en in de hoogste resolutie.</li>
                     </ul>
                 </div>
             </div>
@@ -208,7 +208,7 @@
 
     <section id="contact" class="cta">
         <div class="container">
-            <h2>Wilt u een fotoshoot boeken of heeft u vragen?</h2>
+            <h2>Wilt u een shoot boeken of heeft u vragen?</h2>
             <p>Neem gerust vrijblijvend contact met ons op via e-mail. Wij reageren snel!</p>
             
             <div class="contact-details">

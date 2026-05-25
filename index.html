@@ -142,15 +142,15 @@
                 <div class="map-legend">
                     <div class="legend-item">
                         <span class="legend-color" style="background: rgba(46, 204, 113, 0.25); border: 2px solid #2ecc71;"></span>
-                        <div><strong>Zone Hoorn (tot 2 km):</strong> Gratis voorrijkosten (Hoorn, Zwaag, Blokker)</div>
+                        <div><strong>Zone Hoorn:</strong> Gratis voorrijkosten (Hoorn, Zwaag, Blokker)</div>
                     </div>
                     <div class="legend-item">
                         <span class="legend-color" style="background: rgba(52, 152, 219, 0.15); border: 2px solid #3498db;"></span>
-                        <div><strong>Ring 1 (tot 12 km):</strong> + € 10,- voorrijkosten</div>
+                        <div><strong>Ring 1 (tot 10 km):</strong> + € 10,- voorrijkosten</div>
                     </div>
                     <div class="legend-item">
                         <span class="legend-color" style="background: rgba(155, 89, 182, 0.08); border: 2px solid #9b59b6;"></span>
-                        <div><strong>Ring 2 (tot 22 km):</strong> + € 20,- voorrijkosten</div>
+                        <div><strong>Ring 2 (tot 20 km):</strong> + € 20,- voorrijkosten</div>
                     </div>
                     <div class="map-note">
                         📍 <strong>Woont u buiten deze ringen?</strong> Geen probleem! Neem gerust contact met ons op, dan overleggen we even over de mogelijkheden.
@@ -205,7 +205,7 @@
                 color: '#2ecc71',
                 fillColor: '#2ecc71',
                 fillOpacity: 0.25,
-                radius: 2000
+                radius: 3000
             }).addTo(map);
             zoneHoorn.bindPopup("<b>Zone Hoorn (binnen 2 km)</b><br>Voorrijkosten: Gratis");
 
@@ -214,7 +214,7 @@
                 color: '#3498db',
                 fillColor: '#3498db',
                 fillOpacity: 0.15,
-                radius: 12000
+                radius: 13000
             }).addTo(map);
             ring1.bindPopup("<b>Ring 1 (binnen 12 km)</b><br>Voorrijkosten: € 10,-");
 
@@ -223,7 +223,7 @@
                 color: '#9b59b6',
                 fillColor: '#9b59b6',
                 fillOpacity: 0.08,
-                radius: 22000
+                radius: 23000
             }).addTo(map);
             ring2.bindPopup("<b>Ring 2 (binnen 22 km)</b><br>Voorrijkosten: € 20,-");
 

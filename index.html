@@ -50,9 +50,9 @@
         .price { font-size: 44px; font-weight: bold; color: var(--primary); margin: 15px 0; }
         .price-sub { font-size: 16px; color: #666; font-weight: normal; block-size: auto; }
         .guarantee { background: #e8f4fd; color: #1d6fa5; padding: 15px; border-radius: 5px; margin-top: 20px; font-weight: 500; font-size: 14px; }
-        .feature-list { text-align: left; margin: 20px 0; list-style: none; }
-        .feature-list li { margin-bottom: 10px; padding-left: 25px; position: relative; }
-        .feature-list li::before { content: "✓"; color: #2ecc71; font-weight: bold; position: absolute; left: 0; }
+        .grid-list { text-align: left; margin: 20px 0; list-style: none; }
+        .grid-list li { margin-bottom: 10px; padding-left: 25px; position: relative; }
+        .grid-list li::before { content: "✓"; color: #2ecc71; font-weight: bold; position: absolute; left: 0; }
 
         /* Kaart styling */
         .map-container { max-width: 800px; margin: 40px auto 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -134,7 +134,7 @@
                         <h3>Pasfotoset aan huis</h3>
                         <p style="color: #666; font-size: 14px;">Voor één persoon</p>
                         <div class="price">€ 39,50</div>
-                        <ul class="feature-list">
+                        <ul class="grid-list">
                             <li>Keuze uit <strong>Hardcopy</strong> (6 geprinte foto's) óf <strong>Digitaal</strong> bestand via e-mail.</li>
                             <li>Beide opties ontvangen? Slechts <strong>+ € 10,-</strong> extra.</li>
                             <li>100% goedgekeurd volgens RDW &amp; overheidseisen.</li>
@@ -150,148 +150,4 @@
                         <span style="background: var(--accent); color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">Voordelig vanaf 2 personen</span>
                         <h3 style="margin-top: 10px;">Groepsafspraken</h3>
                         <p style="color: #666; font-size: 14px;">Gezinnen, zorginstellingen of buren</p>
-                        <div class="price">€ 20,- <span class="price-sub">p.p.</span></div>
-                        <ul class="feature-list">
-                            <li>1e persoon betaalt het basistarief (€ 39,50).</li>
-                            <li><strong>Vanaf de 2e persoon</strong> slechts € 20,- per set!</li>
-                            <li>Bijvoorbeeld om samen te voegen met buren of gezinsleden.</li>
-                            <li>Ideaal voor een bedrijf of verzorgingstehuis.</li>
-                        </ul>
-                    </div>
-                    <p style="font-size: 13px; color: #666; font-style: italic;">Alle personen worden tijdens dezelfde afspraak gefotografeerd.</p>
-                </div>
-            </div>
-
-            <div class="map-container">
-                <h3>Servicegebied &amp; Voorrijkosten</h3>
-                <p style="margin-bottom: 15px; font-size: 15px; color: #666;">Geen voorrijkosten in Hoorn, Zwaag en Blokker. Eventuele parkeerkosten op locatie worden wel doorberekend.</p>
-                
-                <div id="map"></div>
-                
-                <div class="map-legend">
-                    <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(46, 204, 113, 0.4); border: 2px solid #2ecc71;"></span>
-                        <div><strong>Zone Hoorn (tot 3 km):</strong> Gratis voorrijkosten</div>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(52, 152, 219, 0.25); border: 2px solid #3498db;"></span>
-                        <div><strong>Ring 1 (tot 13 km):</strong> + € 10,- voorrijkosten</div>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(155, 89, 182, 0.15); border: 2px solid #9b59b6;"></span>
-                        <div><strong>Ring 2 (tot 23 km):</strong> + € 20,- voorrijkosten</div>
-                    </div>
-                    <div class="map-note">
-                        📍 <strong>Woont u buiten deze ringen?</strong> Geen probleem! Neem gerust contact met ons op, dan overlegen we even over de mogelijkheden.
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="contact" class="cta">
-        <div class="container">
-            <h2>Direct een afspraak maken?</h2>
-            <p>Mail ons om een datum en tijdstip te reserveren.</p>
-            
-            <div class="contact-details">
-                <p><strong>✉️ E-mail:</strong> <a href="mailto:info@keuningfotografie.nl" style="color: #fff;">info@keuningfotografie.nl</a></p>
-            </div>
-            <br><br>
-            <a href="mailto:info@keuningfotografie.nl" class="btn" style="background: #fff; color: var(--primary);">Stuur een e-mail</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Keuning Fotografie. Alle rechten voorbehouden.</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script>
-        window.addEventListener('load', function() {
-            const hoornCoords = [52.652, 5.065];
-            
-            // Originele OpenStreetMap teruggezet voor maximale scherpte
-            const map = L.map('map').setView([52.69, 5.08], 10);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-
-            const marker = L.marker(hoornCoords).addTo(map);
-            marker.bindPopup("<b>Keuning Fotografie</b><br>Basisregio Hoorn, Zwaag &amp; Blokker.").openPopup();
-
-            // Vloeiende, gedetailleerde kustlijn-polygoon van de dijk
-            const landMaskerGeoJSON = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [4.70, 52.95], // Kop van NH
-                        [4.942, 52.934], [5.041, 52.911], // Den Oever
-                        [5.074, 52.839], [5.122, 52.781], // Richting Medemblik
-                        [5.114, 52.768], [5.130, 52.767], [5.155, 52.748], // Medemblik kust detail
-                        [5.176, 52.723], [5.203, 52.705], [5.244, 52.706], // Wervershoof / Andijk
-                        [5.285, 52.693], [5.313, 52.673], [5.304, 52.645], // Enkhuizen ronding
-                        [5.263, 52.637], [5.215, 52.633], [5.150, 52.630], // Wijdenes / Schellinkhout
-                        [5.094, 52.641], [5.056, 52.637], // Hoorn kust
-                        [5.035, 52.616], [5.004, 52.601], // Schardam
-                        [5.047, 52.545], [5.060, 52.495], // Volendam / Monnickendam
-                        [4.70, 52.45]  // Diep in het binnenland terug naar start
-                    ]]
-                }
-            };
-
-            // Functie die een ECHTE vloeiende cirkel maakt en hem direct afknipt bij de dijk
-            function drawPerfectClippedCircle(center, radiusKm, styleOptions) {
-                const centerPoint = turf.point([center[1], center[0]]);
-                // Maak een perfecte cirkel met 64 hoeken (visueel 100% vloeiend rond)
-                const perfectCircle = turf.buffer(centerPoint, radiusKm, {units: 'kilometers', steps: 64});
-                
-                try {
-                    // Snijd de perfecte cirkel exact af langs de dijk-coördinaten
-                    const clipped = turf.intersection(perfectCircle, landMaskerGeoJSON);
-                    if (clipped) {
-                        L.geoJSON(clipped, {
-                            style: function() { return styleOptions; }
-                        }).addTo(map);
-                    }
-                } catch (error) {
-                    // Fallback mocht er iets haperen
-                    L.circle(center, { radius: radiusKm * 1000, ...styleOptions }).addTo(map);
-                }
-            }
-
-            // Zone Hoorn: 3 kilometer (Groen)
-            drawPerfectClippedCircle(hoornCoords, 3, {
-                color: '#2ecc71',
-                fillColor: '#2ecc71',
-                fillOpacity: 0.4,
-                weight: 2
-            });
-
-            // Ring 1: 13 kilometer (Blauw)
-            drawPerfectClippedCircle(hoornCoords, 13, {
-                color: '#3498db',
-                fillColor: '#3498db',
-                fillOpacity: 0.25,
-                weight: 2
-            });
-
-            // Ring 2: 23 kilometer (Paars)
-            drawPerfectClippedCircle(hoornCoords, 23, {
-                color: '#9b59b6',
-                fillColor: '#9b59b6',
-                fillOpacity: 0.15,
-                weight: 2
-            });
-
-            setTimeout(function(){ map.invalidateSize(); }, 400);
-        });
-    </script>
-</body>
-</html>
+                        <div class="price">€ 20,-

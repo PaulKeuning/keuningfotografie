@@ -7,22 +7,26 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     
     <style>
-        /* Basis Stijlen */
+        /* Kleurstelling: Soft Harmony Palette */
         :root {
-            --primary: #2c3e50;
-            --accent: #e67e22;
-            --light: #f8f9fa;
-            --dark: #333333;
+            --primary: #5E646A;    /* Slate - Voor hoofdelementen, titels en donkere secties */
+            --accent: #AEB8A7;     /* Eucalyptus - Voor accenten, vinkjes, stappen en hover-effecten */
+            --accent-hover: #9ca695;
+            --dune: #D7C7B8;        /* Dune - Warm accent voor knoppen en kaders */
+            --dune-hover: #c7b5a4;  
+            --light: #EFE7DE;      /* Pearl - Zachte achtergrondkleur voor blokken */
+            --secondary: #8E7E73;  /* Mushroom - Warm bruingrijs voor footer en overlays */
+            --dark: #333333;       /* Donkergrijze leestekst */
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark); line-height: 1.6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark); line-height: 1.6; background-color: #ffffff; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         
-        /* Vaste, stabiele Header & Navigatie (Geen animaties meer) */
+        /* Vaste Header & Navigatie */
         header { 
             background: #fff; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
             position: sticky; 
             top: 0; 
             z-index: 1000;
@@ -35,13 +39,13 @@
             align-items: center; 
         }
         
-        /* Logo groter op dezelfde regel */
+        /* Logo */
         .logo { 
             display: flex; 
             align-items: center;
         }
         .logo img { 
-            width: 280px; /* Mooi groot formaat op desktop */
+            width: 280px; 
             height: auto;
             display: block; 
         }
@@ -51,22 +55,28 @@
             display: flex;
         }
         .nav-links a { 
-            color: var(--dark); 
+            color: var(--primary); 
             text-decoration: none; 
             margin-left: 25px; 
             font-weight: 500; 
             white-space: nowrap;
+            transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--accent); }
 
         /* Hero Sectie */
-        .hero { background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; color: #fff; padding: 100px 0; text-align: center; }
-        .hero h1 { font-size: 40px; margin-bottom: 20px; }
-        .hero p { font-size: 20px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero { 
+            background: linear-gradient(rgba(142, 126, 115, 0.8), rgba(142, 126, 115, 0.8)), url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; 
+            color: #fff; 
+            padding: 100px 0; 
+            text-align: center; 
+        }
+        .hero h1 { font-size: 40px; margin-bottom: 20px; font-weight: 600; }
+        .hero p { font-size: 20px; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; opacity: 0.95; }
         
         /* Knoppen */
-        .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
-        .btn:hover { background: #cf6d17; }
+        .btn { display: inline-block; background: var(--dune); color: #2c3338; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s, color 0.3s; }
+        .btn:hover { background: var(--dune-hover); color: #1a2024; }
 
         /* Secties Algemeen */
         section { padding: 80px 0; }
@@ -79,13 +89,13 @@
 
         /* Tarieven Grid & Styling */
         .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 40px; }
-        .pricing-box { border: 2px solid #e1e8ed; padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+        .pricing-box { border: 2px solid #e1e8ed; border-top: 5px solid var(--dune); padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background: #fff; display: flex; flex-direction: column; justify-content: space-between; }
         .price { font-size: 44px; font-weight: bold; color: var(--primary); margin: 15px 0; }
         .price-sub { font-size: 16px; color: #666; font-weight: normal; block-size: auto; }
-        .guarantee { background: #e8f4fd; color: #1d6fa5; padding: 15px; border-radius: 5px; margin-top: 20px; font-weight: 500; font-size: 14px; }
+        .guarantee { background: var(--light); color: var(--primary); padding: 15px; border-radius: 5px; margin-top: 20px; font-weight: 500; font-size: 14px; border-left: 4px solid var(--accent); }
         .grid-list { text-align: left; margin: 20px 0; list-style: none; }
         .grid-list li { margin-bottom: 10px; padding-left: 25px; position: relative; }
-        .grid-list li::before { content: "✓"; color: #2ecc71; font-weight: bold; position: absolute; left: 0; }
+        .grid-list li::before { content: "✓"; color: var(--accent); font-weight: bold; position: absolute; left: 0; }
 
         /* Kaart styling */
         .map-container { max-width: 800px; margin: 40px auto 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -100,19 +110,19 @@
         .cta { background: var(--primary); color: #fff; text-align: center; }
         .cta h2 { color: #fff; }
         .contact-details { margin-top: 30px; font-size: 18px; }
-        .contact-details p { margin: 10px 0; }
+        .contact-details p { margin: 10px 0; opacity: 0.9; }
 
         /* Footer */
-        footer { background: #222; color: #888; text-align: center; padding: 20px 0; font-size: 14px; }
+        footer { background: var(--secondary); color: var(--light); text-align: center; padding: 20px 0; font-size: 14px; }
 
         /* Mobiel / Tablet optimalisatie */
         @media (max-width: 768px) {
             .nav-container {
-                flex-direction: column; /* Onder elkaar op mobiel voor de ruimte */
+                flex-direction: column;
                 gap: 15px;
             }
             .logo img {
-                width: 220px; /* Iets compacter op mobiel scherm */
+                width: 220px;
             }
             .nav-links a {
                 margin: 0 10px;
@@ -152,24 +162,24 @@
                 Heeft u een officiële pasfoto nodig, maar is een bezoek aan een fotograaf niet praktisch of gewenst? 
                 Met onze mobiele pasfotoservice komen wij naar u toe, zodat u in alle rust een professionele en goedgekeurde pasfoto kunt laten maken.
             </p>
-    
+            
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; text-align: left;">
                 
-                <div style="background: var(--light); padding: 25px; border-radius: 8px; border-left: 4px solid var(--accent);">
+                <div style="background: var(--light); padding: 25px; border-radius: 8px; border-left: 4px solid var(--dune);">
                     <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--primary);">❤️ Zorg &amp; Gemak aan huis</h3>
                     <p style="font-size: 14px; color: #555;">Ideaal voor wie slecht ter been is, verblijft in een zorgcentrum, te maken heeft met dementie, of simpelweg de voorkeur geeft aan de eigen vertrouwde omgeving.</p>
                 </div>
-    
-                <div style="background: var(--light); padding: 25px; border-radius: 8px; border-left: 4px solid var(--accent);">
+                
+                <div style="background: var(--light); padding: 25px; border-radius: 8px; border-left: 4px solid var(--dune);">
                     <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--primary);">👩 Vrouwelijke fotograaf</h3>
                     <p style="font-size: 14px; color: #555;">Ook vanuit geloofsovertuiging of persoonlijke voorkeur kunt u een vrouwelijke fotograaf ontvangen. Wij zorgen er altijd voor dat u zich op uw gemak voelt.</p>
                 </div>
-    
-                <div style="background: var(--light); padding: 25px; border-radius: 8px; border-left: 4px solid var(--accent);">
+                
+                <div style="background: var(--light); padding: 25px; border-radius: 8px; border-left: 4px solid var(--dune);">
                     <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--primary);">🏢 Bedrijven &amp; Groepen</h3>
                     <p style="font-size: 14px; color: #555;">Wij verzorgen snel en efficiënt meerdere pasfoto's op één locatie voor bedrijven, sportverenigingen, scholen en zorginstellingen.</p>
                 </div>
-    
+                
             </div>
         </div>
     </section>
@@ -181,7 +191,7 @@
                 <div class="step">
                     <span class="step-number">1</span>
                     <h3>Afspraak plannen</h3>
-                    <p>Wij komen bij u op locatie voor een pasfoto of fotoshoot. Neem eenvoudig contact op via <a href="#contact">ons contactformulier</a>.</p>
+                    <p>Wij komen bij u op locatie voor een pasfoto of fotoshoot. Neem eenvoudig contact op via <a href="#contact" style="color: var(--primary);">ons contactformulier</a>.</p>
                 </div>
                 <div class="step">
                     <span class="step-number">2</span>
@@ -197,7 +207,7 @@
                     <span class="step-number">4</span>
                     <h3>Eenvoudig betalen</h3>
                     <p>Afrekenen kan heel gemakkelijk via pin of met een digitaal betaalverzoek.</p>
-            </div>
+                </div>
             </div>
         </div>
     </section>
@@ -224,9 +234,9 @@
                     </div>
                 </div>
 
-                <div class="pricing-box" style="border-color: var(--accent);">
+                <div class="pricing-box" style="border-top-color: var(--dune);">
                     <div>
-                        <span style="background: var(--accent); color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">Voordelig vanaf 2 personen</span>
+                        <span style="background: var(--dune); color: #2c3338; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">Voordelig vanaf 2 personen</span>
                         <h3 style="margin-top: 10px;">Groepsafspraken</h3>
                         <p style="color: #666; font-size: 14px;">Gezinnen, zorginstellingen of buren</p>
                         <div class="price">€ 22,50 <span class="price-sub">p.p.</span></div>

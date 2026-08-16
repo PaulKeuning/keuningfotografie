@@ -84,7 +84,9 @@
         /* Diensten Grid */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .service-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--dune); display: flex; flex-direction: column; justify-content: space-between; }
-        .service-img { height: 220px; width: 100%; object-fit: cover; background-color: var(--light); }
+        /*.service-img { height: 220px; width: 100%; object-fit: cover; background-color: var(--light); }*/
+        .service-img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px 8px 0 0; }
+        
         .service-content { padding: 25px; flex-grow: 1; }
         .service-content h3 { font-size: 22px; margin-bottom: 12px; color: var(--primary); }
         .service-content p { color: #555; font-size: 15px; margin-bottom: 20px; }

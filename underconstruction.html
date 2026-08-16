@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keuning Fotografie | Uw fotograaf in Hoorn en West-Friesland</title>
     <style>
-        /* Nieuwe Kleurstelling: Charcoal & Sage */
+        /* Kleurstelling: Soft Harmony Palette */
         :root {
-            --primary: #5d5652; /* Charcoal */
-            --accent: #a8b39b;  /* Sage */
-            --light: #f5f5f4;   /* Warm lichtgrijs dat mooi kleurt bij charcoal/sage */
-            --dark: #333333;
+            --primary: #5E646A;    /* Slate - Voor hoofdelementen, titels en donkere secties */
+            --accent: #AEB8A7;     /* Eucalyptus - Voor accenten, knoppen, randen en links */
+            --accent-hover: #9ca695;/* Donkerdere tint Eucalyptus voor hover effecten */
+            --light: #EFE7DE;      /* Pearl - Warme, lichte achtergrond voor secties */
+            --light-alt: #D7C7B8;  /* Dune - Secundaire warme tint voor nuances */
+            --secondary: #8E7E73;  /* Mushroom - Voor hero-overlay, footer of specifieke accenten */
+            --dark: #333333;       /* Donkergrijze leestekst */
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark); line-height: 1.6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark); line-height: 1.6; background-color: #ffffff; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         
         /* Vaste, stabiele Header & Navigatie */
@@ -61,31 +64,31 @@
         section h2 { text-align: center; font-size: 36px; margin-bottom: 20px; color: var(--primary); }
         .section-subtitle { text-align: center; font-size: 18px; color: #666; max-width: 600px; margin: 0 auto 50px auto; }
 
-        /* Hero Sectie (Welkomstscherm met sfeervolle overlay) */
+        /* Hero Sectie (Welkomstscherm met sfeervolle Mushroom overlay) */
         .hero { 
-            background: linear-gradient(rgba(93, 86, 82, 0.8), rgba(93, 86, 82, 0.8)), url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; 
+            background: linear-gradient(rgba(142, 126, 115, 0.8), rgba(142, 126, 115, 0.8)), url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; 
             color: #fff; 
             padding: 140px 0; 
             text-align: center; 
         }
         .hero h1 { font-size: 48px; margin-bottom: 20px; font-weight: 600; }
-        .hero p { font-size: 22px; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.9; }
+        .hero p { font-size: 22px; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.95; }
         
         /* Knoppen */
         .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s, color 0.3s; }
-        .btn:hover { background: #96a189; }
+        .btn:hover { background: var(--accent-hover); }
         .btn-secondary { background: transparent; border: 2px solid #fff; margin-left: 15px; }
         .btn-secondary:hover { background: #fff; color: var(--primary); }
 
         /* Diensten Grid */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .service-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--accent); display: flex; flex-direction: column; justify-content: space-between; }
-        .service-img { height: 220px; width: 100%; object-fit: cover; background-color: #eee; }
+        .service-img { height: 220px; width: 100%; object-fit: cover; background-color: var(--light); }
         .service-content { padding: 25px; flex-grow: 1; }
         .service-content h3 { font-size: 22px; margin-bottom: 12px; color: var(--primary); }
         .service-content p { color: #555; font-size: 15px; margin-bottom: 20px; }
         .service-link { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 15px; }
-        .service-link:hover { color: #96a189; text-decoration: underline; }
+        .service-link:hover { color: var(--accent-hover); text-decoration: underline; }
 
         /* Over Ons / Werkwijze */
         .about-section { background-color: var(--light); }
@@ -104,7 +107,7 @@
         .contact-details p { margin: 10px 0; opacity: 0.9; }
 
         /* Footer */
-        footer { background: #4a4441; color: #bbb; text-align: center; padding: 20px 0; font-size: 14px; }
+        footer { background: var(--secondary); color: var(--light); text-align: center; padding: 20px 0; font-size: 14px; }
 
         /* Mobiel / Tablet optimalisatie */
         @media (max-width: 768px) {
@@ -197,7 +200,7 @@
                 </div>
                 <div>
                     <ul class="steps-list">
-                        <li><strong>1. Op afspraak: </strong> Wij komen bij u op locatie voor een pasfoto of fotoshoot. Neem eenvoudig contact op via <a href="#contact">ons contactformulier</a>.</li>
+                        <li><strong>1. Op afspraak: </strong> Wij komen bij u op locatie voor een pasfoto of fotoshoot. Neem eenvoudig contact op via <a href="#contact" style="color: var(--primary);">ons contactformulier</a>.</li>
                         <li><strong>2. Aangename shoot:</strong> In een ontspannen sfeer en op uw eigen tempo zorgen we voor het gewenste resultaat.</li>
                         <li><strong>3. Direct afgedrukt of online kiezen: </strong> Pasfoto's drukken wij direct bij u af. Bij een fotoshoot kiest u uw favorieten later in een persoonlijke online galerij.</li>
                         <li><strong>4. Digitale levering:</strong> Na zorgvuldige selectie en bewerking ontvangt u van ons een link naar de online galerij waarin u rustig uw favorieten kunt kiezen.</li>

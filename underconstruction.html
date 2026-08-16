@@ -8,12 +8,11 @@
         /* Kleurstelling: Soft Harmony Palette */
         :root {
             --primary: #5E646A;    /* Slate - Voor hoofdelementen, titels en donkere secties */
-            --accent: #AEB8A7;     /* Eucalyptus - Voor accenten, knoppen, randen en links */
+            --accent: #AEB8A7;     /* Eucalyptus - Voor accenten, links en iconen */
             --accent-hover: #9ca695;/* Donkerdere tint Eucalyptus voor hover effecten */
-            --mist-blue: #BCC6CF;  /* Mist Blue - Uit het kleurenpalet */
-            --mist-blue-hover: #aab5be; /* Donkerdere tint Mist Blue voor hover */
+            --dune: #D7C7B8;        /* Dune - Accentkleur voor de primair knop en bovenranden kaarten */
+            --dune-hover: #c7b5a4;  /* Donkerdere tint Dune voor hover */
             --light: #EFE7DE;      /* Pearl - Warme, lichte achtergrond voor secties */
-            --light-alt: #D7C7B8;  /* Dune - Secundaire warme tint voor nuances */
             --secondary: #8E7E73;  /* Mushroom - Voor hero-overlay, footer of specifieke accenten */
             --dark: #333333;       /* Donkergrijze leestekst */
         }
@@ -77,16 +76,14 @@
         .hero p { font-size: 22px; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.95; }
         
         /* Knoppen */
-        .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s, color 0.3s; }
-        .btn:hover { background: var(--accent-hover); }
-        .btn-mist-blue { background: var(--mist-blue); color: #2c3338; }
-        .btn-mist-blue:hover { background: var(--mist-blue-hover); color: #1a2024; }
-        .btn-secondary { background: transparent; border: 2px solid #fff; margin-left: 15px; }
+        .btn { display: inline-block; background: var(--dune); color: #2c3338; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s, color 0.3s; }
+        .btn:hover { background: var(--dune-hover); color: #1a2024; }
+        .btn-secondary { background: transparent; border: 2px solid #fff; margin-left: 15px; color: #fff; }
         .btn-secondary:hover { background: #fff; color: var(--primary); }
 
         /* Diensten Grid */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .service-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--accent); display: flex; flex-direction: column; justify-content: space-between; }
+        .service-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--dune); display: flex; flex-direction: column; justify-content: space-between; }
         .service-img { height: 220px; width: 100%; object-fit: cover; background-color: var(--light); }
         .service-content { padding: 25px; flex-grow: 1; }
         .service-content h3 { font-size: 22px; margin-bottom: 12px; color: var(--primary); }
@@ -152,7 +149,7 @@
         <div class="container">
             <h1>Uw fotograaf in Hoorn en West-Friesland</h1>
             <p>Voor pasfoto's aan huis, sportfotografie en portretfotografie.<br />Persoonlijk en professioneel.</p>
-            <a href="#diensten" class="btn btn-mist-blue">Bekijk onze diensten</a>
+            <a href="#diensten" class="btn">Bekijk onze diensten</a>
             <a href="#contact" class="btn btn-secondary">Kennismaken</a>
         </div>
     </section>
@@ -163,7 +160,7 @@
             <p class="section-subtitle">Ontdek onze specialismen. Van onze unieke pasfotoservice direct aan huis en actievolle sportmomenten tot pure portretten. </p>
             
             <div class="services-grid">
-                <div class="service-card" style="border-top-color: var(--primary);">
+                <div class="service-card">
                     <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=500&q=80" alt="Pasfoto's aan Huis" class="service-img">
                     <div class="service-content">
                         <h3>Pasfoto's aan Huis</h3>

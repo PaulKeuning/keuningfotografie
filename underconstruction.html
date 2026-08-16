@@ -10,6 +10,8 @@
             --primary: #5E646A;    /* Slate - Voor hoofdelementen, titels en donkere secties */
             --accent: #AEB8A7;     /* Eucalyptus - Voor accenten, knoppen, randen en links */
             --accent-hover: #9ca695;/* Donkerdere tint Eucalyptus voor hover effecten */
+            --mist-blue: #BCC6CF;  /* Mist Blue - Uit het kleurenpalet */
+            --mist-blue-hover: #aab5be; /* Donkerdere tint Mist Blue voor hover */
             --light: #EFE7DE;      /* Pearl - Warme, lichte achtergrond voor secties */
             --light-alt: #D7C7B8;  /* Dune - Secundaire warme tint voor nuances */
             --secondary: #8E7E73;  /* Mushroom - Voor hero-overlay, footer of specifieke accenten */
@@ -77,6 +79,8 @@
         /* Knoppen */
         .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s, color 0.3s; }
         .btn:hover { background: var(--accent-hover); }
+        .btn-mist-blue { background: var(--mist-blue); color: #2c3338; }
+        .btn-mist-blue:hover { background: var(--mist-blue-hover); color: #1a2024; }
         .btn-secondary { background: transparent; border: 2px solid #fff; margin-left: 15px; }
         .btn-secondary:hover { background: #fff; color: var(--primary); }
 
@@ -148,7 +152,7 @@
         <div class="container">
             <h1>Uw fotograaf in Hoorn en West-Friesland</h1>
             <p>Voor pasfoto's aan huis, sportfotografie en portretfotografie.<br />Persoonlijk en professioneel.</p>
-            <a href="#diensten" class="btn">Bekijk onze diensten</a>
+            <a href="#diensten" class="btn btn-mist-blue">Bekijk onze diensten</a>
             <a href="#contact" class="btn btn-secondary">Kennismaken</a>
         </div>
     </section>

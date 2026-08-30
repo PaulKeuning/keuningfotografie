@@ -47,15 +47,35 @@
         .folder-info h3 { color: var(--primary); font-size: 22px; margin-bottom: 5px; }
         .folder-info span { color: var(--accent-hover); font-weight: 600; font-size: 14px; }
 
-        /* Foto Grid (Binnenin een specifieke map) */
+        /* Foto Grid (Binnenin een specifieke map) - Masonry Layout */
         .album-view { display: none; margin: 40px 0 80px 0; }
         .album-header { margin-bottom: 25px; border-bottom: 2px solid var(--light); padding-bottom: 15px; }
         .album-header h2 { color: var(--primary); font-size: 28px; }
 
-        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .photo-item { border-radius: 6px; overflow: hidden; aspect-ratio: 4 / 3; background-color: var(--light); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
-        .photo-item img:hover { transform: scale(1.04); }
+        .photo-grid { 
+            column-count: 3; 
+            column-gap: 20px; 
+        }
+
+        .photo-item { 
+            border-radius: 6px; 
+            overflow: hidden; 
+            background-color: var(--light); 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+            margin-bottom: 20px; 
+            break-inside: avoid; 
+        }
+
+        .photo-item img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            transition: transform 0.3s ease; 
+        }
+
+        .photo-item img:hover { 
+            transform: scale(1.02); 
+        }
 
         /* CTA Section */
         .cta { background: var(--primary); color: #fff; text-align: center; padding: 60px 0; }
@@ -70,7 +90,13 @@
             .nav-container { flex-direction: column; gap: 15px; }
             .logo img { width: 220px; }
             .nav-links a { margin: 0 10px; }
-            .photo-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+            .photo-grid { 
+                column-count: 2; 
+                column-gap: 10px; 
+            }
+            .photo-item { 
+                margin-bottom: 10px; 
+            }
         }
     </style>
 </head>

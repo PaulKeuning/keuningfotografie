@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /portfolio.html
 Sitemap: https://keuningfotografie.nl/sitemap.xml

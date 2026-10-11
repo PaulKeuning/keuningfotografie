@@ -121,6 +121,12 @@
 
         /* Footer */
         footer { background: var(--secondary); color: var(--light); text-align: center; padding: 20px 0; font-size: 14px; }
+        .footer-links { margin-top: 10px; }
+        .footer-links a { color: var(--light); text-decoration: underline; margin: 0 8px; font-size: 13px; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--dune); }
+        
+        /* Footer */
+        footer { background: var(--secondary); color: var(--light); text-align: center; padding: 20px 0; font-size: 14px; }
 
         /* Mobiel / Tablet optimalisatie */
         @media (max-width: 768px) {
@@ -140,6 +146,7 @@
             .hero .btn-secondary { margin-left: 0; }
             .two-column { grid-template-columns: 1fr; gap: 30px; }
         }
+        
     </style>
 </head>
 <body>
@@ -249,6 +256,10 @@
     <footer>
         <div class="container">
             <p>&copy; 2026 Keuning Fotografie. Alle rechten voorbehouden.</p>
+            <div class="footer-links">
+                <a href="AV/Algemene%20Voorwaarden%20Keuning%20Fotografie.pdf" target="_blank" rel="noopener">Algemene Voorwaarden</a> | 
+                <a href="AV/Privacyverklaring%20Keuning%20fotografie.pdf" target="_blank" rel="noopener">Privacyverklaring</a>
+            </div>
         </div>
     </footer>
 
